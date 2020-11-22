@@ -1,0 +1,251 @@
+% Все отсюда до \begin{document} называется преамбулой.
+% Подключаем файл ГОСТ-стиля
+\input{lib/style.tex}
+% Подключаем полезные макросы.
+\input{lib/macro.tex}
+
+% Подключаем математику.
+\usepackage{amsmath,amsthm,amssymb,breqn}
+
+% Подключаем подсветку синтаксиса.
+\usepackage[outputdir=build]{minted}
+% \usepackage[gray]{xcolor}
+\usemintedstyle{vs}
+% убирает красные рамки при использовании некорректного синтаксиса.
+\makeatletter
+\AtBeginEnvironment{minted}{\dontdofcolorbox}
+\def\dontdofcolorbox{\renewcommand\fcolorbox[4][]{##4}}
+\makeatother
+
+% Устанавливаем путь к изображениям.
+\graphicspath{{images/}}
+% Подключаем список лит-ры.
+\addbibresource{refs.bib}
+
+% Конец преамбулы. В окружении `document` помещается сам текст работы.
+\begin{document}
+
+% Вставим титульник из файла `title.tex`.
+\include{title}
+% Титульник не идет в счет страниц, исправим это вручную:
+\setcounter{page}{2}
+
+% Вставляем автоматически генерируемое содержание.
+\tableofcontents
+
+\intro
+
+Начнем на документ с формулы \eqref{eq:wtf} в дань уважения истории,
+поскольку \emph{LaTeX} создавался математиками для математиков. Другие формулы
+есть в приложении \ref{app:coolformulas}.
+
+\begin{equation}\label{eq:wtf}
+ P(A) = \sum P(\{ (e_1,\dotsc,e_N) \}) = \begin{pmatrix} N\\k \end{pmatrix} \cdot p^kq^{N-k}
+\end{equation}
+
+Также можно добавить картинку, как, собственно, это показано на рисунке
+\ref{randomPicture}. Заодно сразу вставим ссылку на литературу \cite{frey2004using}.
+Как видно, для ссылки лит-ру используется тег \emph{\textbackslash cite}, для всего
+остального -- \emph{\textbackslash ref}.
+
+\insertimage{randomPicture}{%
+    Здесь мы видим способность LaTeX вставлять картинки
+}
+
+Больше изображений можно найти в приложении \ref{app:weebs}.
+
+Отступ после картинки должен тоже быть нормальным. Кроме того, у нас есть
+рабочие длинные таблицы. Чтобы на них посмотреть, взгляните, например, на
+таблицу \ref{tab:mytab}.
+
+\noindent
+\begin{tabularx}{\textwidth} {%
+% Размечаем два столбца,
+    |>{\small\hsize=0.35\hsize\raggedright\arraybackslash}X
+    |>{\small\hsize=0.65\hsize\raggedright\arraybackslash}X|}
+
+% вставляем название,
+\caption{Этапы обработки предложения}\label{tab:mytab}\\
+
+% указываем, как должна выглядеть шапка таблицы,
+\hline
+\textbf{Первый столбец} & \textbf{Второй столбец подлиннее}\\
+\endfirsthead
+
+% указываем другую шапку, которая будет появляться на следующей странице таблицы.
+\caption*{Продолжение таблицы \ref{tab:mytab}}\\
+\endhead
+
+% Теперь дело только за содержимым. Не забывайте ставить двойной слэш в конце
+% строки таблицы.
+\hline
+Оригинальное предложение & Показанный на рисунке
+гидродинамический удар, безусловно, подрывает смысл жизни.\\
+\hline
+Токенизация & {[}'Показанный', 'на',
+'рисунке', 'гидродинамический', 'удар', ',', 'безусловно', ',', 'подрывает',
+'смысл', 'жизни', '.'{]} \\
+\hline
+Приведение слов в нормальную форму и определение частей речи & {[}'Показать',
+'на', 'рисунок', 'гидродинамический', 'удар', ',', 'безусловно', ',',
+'подрывать', 'смысл', 'жизнь', '.'{]} \\
+\hline
+\multicolumn{2}{|>{\small\raggedright\arraybackslash}X|}%
+{Сплошной столбец, почему бы и нет?} \\
+\hline
+Выделение термов & {[}'рисунок', 'гидродинамический удар', 'смысл жизни'{]} \\
+\hline
+\end{tabularx}
+
+Получилась довольно длинная таблица. Хорошо, что она закончилась, как и это
+введение.
+
+\chapter{Начало всех начал}
+Что бы рассказать в этой главе? Пока не знаю, но информация будет действительно
+интересной.
+
+\section{Разметка текста}
+\subsection{}
+Попробуем написать что-нибудь \emph{курсивом}. В \emph{LaTeX} вроде бы
+приходится экранировать \emph{нижнее_подчеркивание}, но здесь все работает и без
+него благодаря пакету underscore. Жирный текст также \textbf{можно написать},
+или вообще, скомбинировать \textbf{\emph{все вместе}}.
+\subsection{}
+Лорем ипсум -- псевдо-латинский текст, который
+используется для веб дизайна, типографии, оборудования, и распечатки вместо
+английского текста для того, чтобы сделать ударение не на содержание, а на
+элементы дизайна.
+\subsection{}
+Такой текст также называется как заполнитель. Это очень
+удобный инструмент для моделей (макетов). Он помогает выделить визуальные
+элементы в документе или презентации, например текст, шрифт или разметка.
+
+\section{По стандарту, переносы в
+заголовках запрещены. Сам же текст вполне может быть записан в две и более строки}
+Допустим, у нас есть список:
+\begin{itemize}
+    \item здесь расположен первый элемент;
+    \item второй элемент будет здесь, при этом он может быть достаточно большим,
+и латех должен справиться;
+    \item третий элемент располагается вот тут;
+\end{itemize}
+
+А теперь то же самое, только с нумерованными:
+\begin{enumerate}
+    \item здесь расположен первый элемент;
+    \item второй элемент будет здесь, при этом он может быть достаточно большим,
+и латех должен справиться;
+    \item третий элемент располагается вот тут;
+\end{enumerate}
+
+\section{Вставка кода}
+
+Куда же нам, программистскому отродью без кусков кода. В ГОСТ не оговаривается,
+как они должны выглядеть -- следовательно, вставляют их как картинки. Однако, не
+торопитесь открывать \emph{mspaint} и сжимать джипеги -- давайте использовать
+средства \emph{LaTeX}. Результат вы видите на рисунках \ref{src:quake} и \ref{src:lsof}.
+
+\begin{codewrap}
+\begin{minted}[fontsize=\footnotesize]{cpp}
+// Код для расчета быстрого квадратного корня.
+float Q_rsqrt( float number )
+{
+    long i;
+    float x2, y;
+    const float threehalfs = 1.5F;
+
+    x2 = number * 0.5F;
+    y  = number;
+    i  = * ( long * ) &y;         // evil floating point bit level hack
+    i  = 0x5f3759df - ( i >> 1 ); // what the fuck?
+    y  = * ( float * ) &i;
+    y  = y * ( threehalfs - ( x2 * y * y ) );
+
+    return y;
+}
+\end{minted}
+\caption{}\label{src:quake}
+\end{codewrap}
+
+\begin{codewrap}
+\begin{minted}[fontsize=\tiny]{bash}
+khokm@arch ~/Downloads % sudo lsof -i   
+COMMAND     PID            USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+systemd-n   217 systemd-network   20u  IPv6  16725      0t0  UDP arch:dhcpv6-client 
+systemd-r   322 systemd-resolve   11u  IPv4  17459      0t0  UDP *:llmnr 
+systemd-r   322 systemd-resolve   12u  IPv4  17460      0t0  TCP *:llmnr (LISTEN)
+systemd-r   322 systemd-resolve   13u  IPv6  17462      0t0  UDP *:llmnr 
+systemd-r   322 systemd-resolve   14u  IPv6  17463      0t0  TCP *:llmnr (LISTEN)
+systemd-r   322 systemd-resolve   17u  IPv4  17465      0t0  UDP localhost:domain 
+systemd-r   322 systemd-resolve   18u  IPv4  17466      0t0  TCP localhost:domain (LISTEN)
+firefox   38272           khokm   99u  IPv4 553848      0t0  TCP arch:43252->93.186.225.201:https (ESTABLISHED)
+firefox   38272           khokm  164u  IPv4 962950      0t0  TCP arch:41070->srv72-190-240-87.vk.com:https (ESTABLISHED)
+firefox   38272           khokm  170u  IPv4 960967      0t0  TCP arch:59108->hem08s07-in-f14.1e100.net:https (ESTABLISHED)
+firefox   38272           khokm  191u  IPv4 535744      0t0  TCP arch:55228->stackoverflow.com:https (ESTABLISHED)
+firefox   38272           khokm  206u  IPv4 954987      0t0  TCP arch:59066->hem08s07-in-f14.1e100.net:https (ESTABLISHED)
+firefox   38272           khokm  215u  IPv4 947198      0t0  TCP arch:59388->stackoverflow.com:https (ESTABLISHED)
+firefox   38272           khokm  223u  IPv4 960849      0t0  TCP arch:51742->hem08s07-in-f4.1e100.net:https (ESTABLISHED)
+firefox   38272           khokm  229u  IPv4 960289      0t0  TCP arch:60234->bud02s22-in-f14.1e100.net:https (ESTABLISHED)
+firefox   38272           khokm  246u  IPv4 960924      0t0  TCP arch:37586->bud02s21-in-f163.1e100.net:https (ESTABLISHED)
+firefox   38272           khokm  258u  IPv4 554876      0t0  TCP arch:32898->srv186-129-240-87.vk.com:https (ESTABLISHED)
+firefox   38272           khokm  263u  IPv4 960938      0t0  TCP arch:54104->lm-in-f196.1e100.net:https (ESTABLISHED)
+firefox   38272           khokm  290u  IPv4 960316      0t0  TCP arch:37012->mad06s10-in-f162.1e100.net:https (ESTABLISHED)
+firefox   38272           khokm  292u  IPv4 962959      0t0  TCP arch:34956->hem08s06-in-f10.1e100.net:https (ESTABLISHED)
+firefox   38272           khokm  303u  IPv4 899629      0t0  TCP arch:59082->stackoverflow.com:https (ESTABLISHED)
+firefox   38272           khokm  304u  IPv4 963874      0t0  TCP arch:37036->mad06s10-in-f162.1e100.net:https (ESTABLISHED)
+firefox   38272           khokm  309u  IPv4 945752      0t0  TCP arch:59348->stackoverflow.com:https (ESTABLISHED)
+firefox   38272           khokm  340u  IPv4 844239      0t0  TCP arch:58442->stackoverflow.com:https (ESTABLISHED)
+code      67227           khokm   95u  IPv4 952138      0t0  TCP localhost:32919 (LISTEN)      
+\end{minted}
+\caption{}\label{src:lsof}
+\end{codewrap}
+
+Результат вставки исходника из файла показан на рисунке \ref{src:flask}.
+
+\begin{codewrap}
+    \inputminted[fontsize=\footnotesize]{python}{source.py}
+    \caption{Вставка куска кода}\label{src:flask}
+\end{codewrap}
+
+Все поддерживаемые синтаксисы можно найти здесь -
+\url{http://pygments.org/docs/lexers/}. Кстати, вставлять реальные ссылки прямо
+в текст не стоит -- добавляйте ее как ссылку на интернет-ресурс в список
+источников. Все источники обязательно нужно цитировать в тексте
+\cite{бобаренко2018отсечение}.
+
+\conclusion
+Lorem ipsum по большей части является элементом латинского текста классического
+автора и философа Цицерона. Слова и буквы были заменены добавлением или
+сокращением элементов, поэтому будет совсем неразумно пытаться передать
+содержание; это не гениально, не правильно, используется даже не понятный
+латинский. Хотя Lorem ipsum напоминает классический латинский, вы не найдете
+никакого смысла в сказанном. Поскольку текст Цицерона не содержит буквы K, W,
+или Z, что чуждо для латинского, эти буквы, а также многие другие часто
+вставлены в случайном порядке, чтобы скопировать тексты различных Европейских
+языков, поскольку диграфы не встречаются в оригинальных текстах
+
+Душа моя озарена неземной радостью, как эти чудесные весенние утра, которыми я
+наслаждаюсь от всего сердца. Я совсем один и блаженствую в здешнем краю, словно
+созданном для таких, как я. Я так счастлив, мой друг, так упоен ощущением покоя,
+что искусство мое страдает от этого. Ни одного штриха не мог бы я сделать, а
+никогда не был таким большим художником, как в эти минуты. Когда от милой моей
+долины поднимается пар и полдневное солнце стоит над непроницаемой чащей темного
+леса и лишь редкий луч проскальзывает в его святая святых, а я лежу в высокой
+траве у быстрого ручья и, прильнув к земле, вижу тысячи всевозможных былинок и
+чувствую, как близок моему сердцу крошечный мирок, что снует между стебельками,
+наблюдаю эти неисчислимые, непостижимые разновидности червяков и мошек и
+чувствую близость всемогущего, создавшего нас по своему подобию, веяние
+вселюбящего, судившего нам парить в вечном блаженстве, когда взор мой туманится
+и все вокруг меня и небо надо мной запечатлены в моей душе, точно образ
+возлюбленной, -- тогда, дорогой друг, меня часто томит мысль: "Ах!".
+
+% Вставляем список источников, сгенерированный из файла refs.bib
+\sources
+
+\newapp{app:coolformulas}{Очень большое и интересное приложение, не так ли?}
+Действительно...
+
+\newapp{app:weebs}{}
+А здесь название отсутствует. И обещанные картинки тоже. Печаль-бида :(.
+
+\end{document}

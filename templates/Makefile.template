@@ -1,0 +1,9 @@
+BUILD = xelatex -halt-on-error -interaction=nonstopmode -shell-escape -output-directory=build main
+all: build main.tex
+	$(BUILD) && biber build/main && $(BUILD) && $(BUILD) && mv build/main.pdf ./ || >&2 echo "Error while building a PDF"
+fast: build main.tex
+	$(BUILD) && mv build/main.pdf ./
+build:
+	mkdir build
+clean:
+	rm -rf build

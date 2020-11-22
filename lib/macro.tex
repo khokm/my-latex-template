@@ -1,0 +1,51 @@
+% Вставка заголовка 'Введение'
+\newcommand{\intro}{%
+    \chapter*{Введение}\addcontentsline{toc}{chapter}{Введение}
+}
+
+% Вставка заголовка 'Заключение'
+\newcommand{\conclusion}{%
+    \chapter*{Заключение}\addcontentsline{toc}{chapter}{Заключение}
+}
+
+% Вставка списка источников
+\newcommand{\sources}{%
+    \printbibliography[heading=bibintoc]
+}
+
+% Вставка картинки.
+% Пример: \insertimage[ширина]{файл_без_расширения}{Подпись}.
+% Ссылка на картинку в тексте: \ref{файл_без_расширения}
+\newcommand{\insertimage}[3][width=\textwidth]{%
+    \begin{figure}[!ht]%
+        \centering
+        \includegraphics[#1]{#2}%
+        \caption{#3}\label{#2}%
+    \end{figure}
+}
+
+% Вставка кода.
+% Пример: \begin{codewrap}[ширина]
+\newenvironment{codewrap}[1][1]{
+    \begin{figure}[!ht]
+        \centering
+            \begin{minipage}{#1\textwidth}
+}{
+            \end{minipage}
+    \end{figure}
+}
+
+% Вставка приложения.
+% Пример: \newapp{}
+\newcounter{coolappcounter}
+\newcommand{\newapp}[2]{%
+	\refstepcounter{coolappcounter}
+    \chapter*{Приложение \thecoolappcounter}\label{#1}
+    \addcontentsline{toc}{chapter}{Приложение \thecoolappcounter\ifblank{#2}{}{\ \ #2} }
+    \ifblank{#2}{}{%
+        \vspace*{-0.7cm}
+        \bfseries\centering{#2}\par
+    }
+    \normalfont
+}
+\renewcommand{\thecoolappcounter}{\Asbuk{coolappcounter}}
